@@ -1,3 +1,138 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+public class Battleship 
+{
+	
+	static int[][] map = new int[10][10];
+	static Scanner input = new Scanner(System.in);
+	static Random random = new Random();
+	static int playerShips = 5;
+	static int computerShips = 5;
+	static ArrayList<Integer> user_x_values = new ArrayList<>();
+	static ArrayList<Integer> user_y_values = new ArrayList<>();
+	static ArrayList<Integer> computer_x_values = new ArrayList<>();
+	static ArrayList<Integer> computer_y_values = new ArrayList<>();
+	
+
+	public static void main(String[] args) {
+		System.out.println("Welcome to Battleships!");
+		showEmptyMap();
+		deployPlayerShips();
+		System.out.println("------------------------------------------");
+		deployComputerShips();
+		showMap();
+		while(playerShips != 0 && computerShips !=0) {
+			userTurn();
+			showMap();
+			computerTurn();
+			showMap();
+		}
+		System.out.println("Horray! You win the battle");
+		
+	}
+	public static void showEmptyMap() {
+		System.out.print("   ");
+		//print the top indexes
+		for(int i=0; i<10; i++) 
+		{
+			System.out.print(i);
+		}
+		System.out.println();
+		//print side indexes
+		for(int row=0; row<map.length; row++) 
+		{
+			System.out.print(row + " " + "|");
+			for(int column=0; column<map[row].length; column++) 
+			{
+				if (map[row][column] == 0) {
+					System.out.print(" ");
+				}
+				else if (map[row][column] == 1) {
+					System.out.print("@");
+				}
+				else if (map[row][column] == 2) {
+					System.out.print(" ");
+				}
+				else if (map[row][column] == 3) {
+					System.out.print("!");
+				}
+				else if (map[row][column] == 4) {
+					System.out.print("x");
+				}
+				else if (map[row][column] == 5) {
+					System.out.print("-");
+				}
+				else {
+					System.out.print(map[row][column]);
+				}
+			}
+			System.out.println("|" + " " + row);
+		}
+		System.out.print("   ");
+		for(int column=0; column<10; column++) 
+		{
+			System.out.print(column);
+		}
+		System.out.println();
+		System.out.println();
+		
+		System.out.println("Your ships: " + 0 + " |" + " Computer ships: " + 0);
+		System.out.println();
+	}
+	
+
+	public static void showMap() 
+	{
+		System.out.print("   ");
+		//print the top indexes
+		for(int i=0; i<10; i++) 
+		{
+			System.out.print(i);
+		}
+		System.out.println();
+		//print side indexes
+		for(int row=0; row<map.length; row++) 
+		{
+			System.out.print(row + " " + "|");
+			for(int column=0; column<map[row].length; column++) 
+			{
+				if (map[row][column] == 0) {
+					System.out.print(" ");
+				}
+				else if (map[row][column] == 1) {
+					System.out.print("@");
+				}
+				else if (map[row][column] == 2) {
+					System.out.print(" ");
+				}
+				else if (map[row][column] == 3) {
+					System.out.print("!");
+				}
+				else if (map[row][column] == 4) {
+					System.out.print("x");
+				}
+				else if (map[row][column] == 5) {
+					System.out.print("-");
+				}
+				else {
+					System.out.print(map[row][column]);
+				}
+			}
+			System.out.println("|" + " " + row);
+		}
+		System.out.print("   ");
+		for(int column=0; column<10; column++) 
+		{
+			System.out.print(column);
+		}
+		System.out.println();
+		System.out.println();
+		
+		System.out.println("Your ships: " + playerShips + " |" + " Computer ships: " + computerShips);
+		System.out.println();
+	}
+
 public static void deployPlayerShips() {
 		//Check for valid location
 		for(int i =1; i<=5; i++) 
