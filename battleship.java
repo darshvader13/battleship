@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-public class Battleship 
+public class battleship 
 {
 	
 	static int[][] map = new int[10][10];
