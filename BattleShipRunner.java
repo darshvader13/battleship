@@ -41,8 +41,8 @@ public class BattleShipRunner
          {
             for(int j = 0; j < 10; j++)
             {
-               visible1[i][j] = " ";
-               visible2[i][j] = " ";
+               visible1[i][j] = "*";
+               visible2[i][j] = "*";
             } 
          }
    
@@ -75,20 +75,20 @@ public class BattleShipRunner
        ArrayList<Integer> user_x_values = new ArrayList<>();
 	    ArrayList<String> user_y_values = new ArrayList<>();
        Scanner input = new Scanner(System.in);
-      System.out.println("YOUR TURN");
-		System.out.print("Enter X coordinate(0-9): ");
-		int x = input.nextInt();
-		System.out.print("Enter Y coordiante(A-J): ");
-		String y = input.nextLine();
+       System.out.println("YOUR TURN");
+	 	 System.out.print("Enter X coordinate(0-9): ");
+		 int x = input.nextInt();
+		 System.out.print("Enter Y coordiante(A-J): ");
+		 String y = input.next();
 		
 		//Check if guess is on board
-		while(((!(x>=0 && x<=9))) && ((y.equalsIgnoreCase("A")) && (y.equalsIgnoreCase("B")) && (y.equalsIgnoreCase("C")) && (y.equalsIgnoreCase("D")) && (y.equalsIgnoreCase("E")) && (y.equalsIgnoreCase("F")) && (y.equalsIgnoreCase("G")) && (y.equalsIgnoreCase("H")) && (y.equalsIgnoreCase("I")) && (y.equalsIgnoreCase("J"))))
+		while(((!(x>=0 && x<=9))) || (!((y.equalsIgnoreCase("A")) || (y.equalsIgnoreCase("B")) || (y.equalsIgnoreCase("C")) || (y.equalsIgnoreCase("D")) || (y.equalsIgnoreCase("E")) || (y.equalsIgnoreCase("F")) || (y.equalsIgnoreCase("G")) || (y.equalsIgnoreCase("H")) || (y.equalsIgnoreCase("I")) || (y.equalsIgnoreCase("J")))))
 		{
 			System.out.println("Oops! That coordinate is out of bounds. Please enter another coordinate... ");
 			System.out.print("Re-enter X coordinate: ");
 			x = input.nextInt();
 			System.out.print("Re-enter Y coordinate: ");
-			y = input.nextLine();
+			y = input.next();
 		}
 		
 		//Check if guess has been repeated
@@ -98,7 +98,7 @@ public class BattleShipRunner
 			System.out.print("Enter X coordinate: ");
 			x = input.nextInt();
 			System.out.print("Enter Y coordiante: ");
-			y = input.nextLine();
+			y = input.next();
 		}
       user_x_values.add(x);
 		user_y_values.add(y);
@@ -137,13 +137,15 @@ public class BattleShipRunner
          
          int count = 0;
          
-         if (!visible1[a][b].equals(" "))
+         if (!visible1[a][b].equals("*"))
          {
             player1.setVisibleShip1(a,b,"X");
+            printVisible1(player1);
          }
          else
          {
             player1.setVisibleShip1(a,b,"O");
+            printVisible1(player1);
          }
    
       }
@@ -151,7 +153,7 @@ public class BattleShipRunner
          
             
    
-   public  void printVisible1(BattleShip player)
+   public static void printVisible1(BattleShip player)
    {
       int count = 0;
          for (int i = 0; i < 10; i++)
