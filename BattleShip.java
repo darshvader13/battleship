@@ -1,10 +1,11 @@
 public class BattleShip
 {
-   public Battleship(String[][] a, String[][] v, int u)
+   private static String[][] visible = new String[10][10];
+   public BattleShip(String[][] v)
    {
-      private String[][] arr = a;
-      private String[][] visible = v;
-      private int user = u;
+      for (int i = 0; i < 10; i++)
+         for (int j = 0; j < 10; j++)
+            visible[i][j] = v[i][j];
    }
 
    public static void setVisibleShip1(int x, int y, String change)
@@ -26,16 +27,8 @@ public class BattleShip
    {
       return visible[x][y];
    }
-   
-   public static String getBattleShip1(int x, int y)
-   {
-      return arr[x][y];
-   }
-   
-   public static String getBattleShip2(int x, int y)
-   {
-      return arr[x][y];
-   }
+}   
+  
   
   
    
