@@ -3,7 +3,7 @@ public class BattleShip{
 	
 	private static int[][] player1Map = {{1, 1, 1, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 2, 2, 2, 2, 2, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 8, 0}, {0, 0, 5, 0, 0, 0, 0, 0, 8, 0}, {0, 0, 5, 0, 3, 0, 0, 0, 8, 0}, {0, 0, 0, 0, 3, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 3, 0, 0, 0, 0, 0}, {0, 9, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 9, 0, 0, 0, 0, 4, 4, 4, 0}};
 		
-	private static int[][] player2Map = {{3, 3, 3, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 5, 0, 4, 4, 4, 0}, {0, 0, 0, 0, 5, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 5, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 5, 0, 0, 3}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 3}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 3}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {2, 2, 2, 2, 2, 0, 0, 0, 0, 0}};
+	private static int[][] player2Map = {{3, 3, 3, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 5, 0, 4, 4, 4, 0}, {0, 0, 0, 0, 5, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 5, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 5, 0, 0, 8}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 8}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 8}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {2, 2, 2, 2, 2, 0, 0, 0, 0, 0}};
 		
 	private static int[][] player1View = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 		
@@ -154,7 +154,11 @@ public class BattleShip{
 				//Checks for Hit or Miss, Player 1.
 				if(player2Map[x_index_1][y_index_1] != 0){
 					System.out.println("Ship Hit!! \n\n\tAt Cords: (" + y_cords[x_index_1] + ", " + y_index_1 + ")");
+					int s = player2Map[x_index_1][y_index_1];
 					player1View[x_index_1][y_index_1] = 7;
+					player2Map[x_index_1][y_index_1] = 7;
+					if ((checkSunk(s, player2Map)) != -1)
+						System.out.println("Ship has sunk");
 					
 					
 				}
@@ -171,7 +175,11 @@ public class BattleShip{
 				//Checks for Hit or Miss, Player 2.
 				if(player1Map[x_index_2][y_index_2] != 0){
 					System.out.println("Ship Hit!! \n\n\tAt Cords: (" + y_cords[x_index_2] + ", " + y_index_2 + ")");
+					int s = player1Map[x_index_1][y_index_1];
 					player2View[x_index_2][y_index_2] = 7;
+					player1Map[x_index_2][y_index_2] = 7;
+					if ((checkSunk(s, player1Map)) != -1)
+						System.out.println("Ship has sunk");
 					
 				}
 				else if(player1Map[x_index_2][y_index_2] == 0){
@@ -224,12 +232,12 @@ public class BattleShip{
 				else
 					temp3 = "ERROR";
 				System.out.print(temp3);
-				sunkType_1 = checkSunk(row, column);
+		
 			}
             System.out.println();
 			
         }
-		System.out.println("You Sunk A " + shipTypes[(sunkType_1 - 1)]);
+		
 		
 		String temp4 = "";
 		
@@ -266,18 +274,19 @@ public class BattleShip{
         }
 	}
 	
-	public static int checkSunk(int row, int column){
-		int sunkIndex = 0;
-		int type = 0;
-		if(player1Map[row][column] == 1){
-			sunkIndex = 0;
-			if(player1View[row][column] == 7){
-				sunkNums[sunkIndex][1]++;
-				if(sunkNums[sunkIndex][1] == 4){
-					type = 1;
+	public static int checkSunk(int s, int[][]a)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				if (a[i][j] == s)
+				{
+					return -1;
 				}
 			}
 		}
-		return type;
+		return s;
+		
 	}
 }
