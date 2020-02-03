@@ -13,14 +13,7 @@ public class BattleShip{
 	
 	private static String y_cord_string = "    A  B  C  D  E  F  G  H  I  J";
 	
-	private static int shipsSunk = 0;
-	//Tracking array for ships sunk.
-	private static int[][] sunkNums = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 	
-	private static String[] shipTypes = {"Battleship", "Carrier", "Carrier", "Submarine", "Destroyer", "Destroyer", "Nothing."};
-	
-	private static int sunkType_1 = 3;
-	private static int sunkType_2 = 3;
 	
 	public static void main(String a[]) throws Exception{
 		/**
@@ -101,6 +94,7 @@ public class BattleShip{
         }
 		
 		printViews();
+		//printShips();
 		
 		Scanner sc = new Scanner(System.in);
 		boolean gameOn = true;
@@ -111,6 +105,12 @@ public class BattleShip{
 		
 		while(gameOn){
 			try{
+				if ((checkGame1() == true) || (checkGame2() == true))
+				{
+					gameOn = false;
+					sc.close();
+					break;
+				}
 				//Player 1
 				System.out.println("Player 1: \n\n");
 				System.out.print("Enter the X-coordinate: ");
@@ -153,17 +153,18 @@ public class BattleShip{
 				
 				//Checks for Hit or Miss, Player 1.
 				if(player2Map[x_index_1][y_index_1] != 0){
-					System.out.println("Ship Hit!! \n\n\tAt Cords: (" + y_cords[y_index_1] + ", " + x_cord_1 + ")");
+					System.out.println("Ship Hit! \n\n\tAt Cords: (" + y_cords[y_index_1] + ", " + (x_index_1 + 1) + ")");
 					int s = player2Map[x_index_1][y_index_1];
 					player1View[x_index_1][y_index_1] = 7;
 					player2Map[x_index_1][y_index_1] = 7;
 					if ((checkSunk(s, player2Map)) != -1)
-						System.out.println("Ship has sunk");
+						System.out.println("Ship Sunk!!");
+						System.out.println();
 					
 					
 				}
 				else if(player2Map[x_index_1][y_index_1] == 0){
-					System.out.println("Miss. \n\n\tAt Cords: (" + y_cords[y_index_1] + ", " + x_cord_1 + ")");
+					System.out.println("Miss. \n\n\tAt Cords: (" + y_cords[y_index_1] + ", " + (x_index_1 + 1) + ")");
 					player1View[x_index_1][y_index_1] = 6;
 					
 				}
@@ -174,16 +175,17 @@ public class BattleShip{
 				
 				//Checks for Hit or Miss, Player 2.
 				if(player1Map[x_index_2][y_index_2] != 0){
-					System.out.println("Ship Hit!! \n\n\tAt Cords: (" + y_cords[y_index_2] + ", " + x_cord_2 + ")");
+					System.out.println("Ship Hit! \n\n\tAt Cords: (" + y_cords[y_index_2] + ", " + (x_index_2 + 1) + ")");
 					int s = player1Map[x_index_1][y_index_1];
 					player2View[x_index_2][y_index_2] = 7;
 					player1Map[x_index_2][y_index_2] = 7;
 					if ((checkSunk(s, player1Map)) != -1)
-						System.out.println("Ship has sunk");
+						System.out.println("Ship Sunk!!");
+						System.out.println();
 					
 				}
 				else if(player1Map[x_index_2][y_index_2] == 0){
-					System.out.println("Miss. \n\n\tAt Cords: (" + y_cords[y_index_2] + ", " + x_cord_2 + ")");
+					System.out.println("Miss. \n\n\tAt Cords: (" + y_cords[y_index_2] + ", " + (x_index_2 + 1) + ")");
 					player2View[x_index_2][y_index_2] = 6;
 					
 				}
@@ -210,7 +212,7 @@ public class BattleShip{
 		for (int row = 0; row < 10; row++) {
 			System.out.print((row + 1) + " ");
 			if(row != 9){
-					System.out.print(" ");
+					System.out.print(" "); 
 				}
 			for (int column = 0; column < 10; column++) {
 				if(player1View[row][column] == 0)
@@ -290,4 +292,40 @@ public class BattleShip{
 		return s;
 		
 	}
+	public static boolean checkGame1()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				if ((player1Map[i][j] != 0)||(player1Map[i][j] != 7))
+				{
+					return false;
+				}
+			}
+		}
+		System.out.println();
+		System.out.println("Player 2 wins");
+		return true;
+		
+	}
+	public static boolean checkGame2()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				if ((player2Map[i][j] != 0)||(player2Map[i][j] != 7))
+				{
+					return false;
+				}
+			}
+		}
+		System.out.println();
+		System.out.println("Player 1 wins");
+		return true;
+		
+	}
+	
+	
 }
